@@ -11,12 +11,12 @@ INPUT: values provided by the simulator to the c++ program
 
 OUTPUT: values provided by the c++ program to the simulator
 
-["estimate_x"] <= kalman filter estimated position x
-["estimate_y"] <= kalman filter estimated position y
-["rmse_x"]
-["rmse_y"]
-["rmse_vx"]
-["rmse_vy"]
+["estimate_x"] <= kalman filter estimated position x  
+["estimate_y"] <= kalman filter estimated position y  
+["rmse_x"]  
+["rmse_y"]  
+["rmse_vx"]  
+["rmse_vy"]  
 
 ---
 
@@ -47,5 +47,5 @@ OUTPUT: values provided by the c++ program to the simulator
 This is optional!
 
 For additional radar and lidar data, check: 
-[utilities repo](https://github.com/udacity/CarND-Mercedes-SF-Utilities) for Matlab scripts that can generate additional data.
+[utilities repo](https://github.com/udacity/CarND-Mercedes-SF-Utilities) for Matlab scripts that can generate additional data. However, this part has not been worked upon.
 
