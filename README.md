@@ -11,27 +11,27 @@ INPUT: values provided by the simulator to the c++ program
 
 OUTPUT: values provided by the c++ program to the simulator
 
-["estimate_x"] <= kalman filter estimated position x  
-["estimate_y"] <= kalman filter estimated position y  
-["rmse_x"]  
-["rmse_y"]  
-["rmse_vx"]  
-["rmse_vy"]  
+["estimate_x"] <= kalman filter estimated position x <br/>
+["estimate_y"] <= kalman filter estimated position y <br/>
+["rmse_x"]<br/>
+["rmse_y"]<br/> 
+["rmse_vx"]<br/> 
+["rmse_vy"]<br/> 
 
 ---
 
 ## Other Important Dependencies
 
 * cmake >= 3.5
-  * All OSes: [click here for installation instructions](https://cmake.org/install/)
+* All OSes: [click here for installation instructions](https://cmake.org/install/)
 * make >= 4.1 (Linux, Mac), 3.81 (Windows)
-  * Linux: make is installed by default on most Linux distros
-  * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
-  * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
+* Linux: make is installed by default on most Linux distros
+* Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
+* Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
 * gcc/g++ >= 5.4
-  * Linux: gcc / g++ is installed by default on most Linux distros
-  * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
-  * Windows: recommend using [MinGW](http://www.mingw.org/)
+* Linux: gcc / g++ is installed by default on most Linux distros
+* Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
+* Windows: recommend using [MinGW](http://www.mingw.org/)
 
 ## Basic Build Instructions
 
@@ -40,6 +40,11 @@ OUTPUT: values provided by the c++ program to the simulator
 3. Compile: `cmake .. && make` 
    * On windows, you may need to run: `cmake .. -G "Unix Makefiles" && make`
 4. Run it: `./ExtendedKF `
+
+## Discussions
+* FusionEKF.cpp - Initialization of the first LiDAR and Radar measurements <br/>
+* KlamanFilter.cpp - Code for KF and EKF. For the Radar update EKF is used <br/>
+* tools.cpp - Some helper functions <br/>
 
 
 ## Generating Additional Data
