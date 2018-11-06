@@ -42,19 +42,21 @@ void KalmanFilter::Update(const VectorXd &z) {
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-    float px = x_(0);
-    float py = x_(1);
-    float vx = x_(2);
-    float vy = x_(3);
+    double px = x_(0);
+    double py = x_(1);
+    double vx = x_(2);
+    double vy = x_(3);
     
     // Equations for Hj below
+    const double eps = .0001;
     double rho = sqrt(px*px + py*py);
-    double theta = atan2(py, px);
-    double rho_dot = (px*vx + py*vy) / rho;
+    double theta = atan2(py, std:max(eps, px));
+    double rho_dot = (px*vx + py*vy) / std:max(eps, rho);
     VectorXd Hj = VectorXd(3);
     Hj << rho, theta, rho_dot;
                     
     VectorXd y = z - Hj;
+    NormalizeAngle(y(1));
   
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;
@@ -66,4 +68,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K * H_) * P_;
+}
+
+void KalmanFilter::NormalizeAngle(double& phi)
+{
+  phi = atan2(sin(phi), cos(phi));
 }

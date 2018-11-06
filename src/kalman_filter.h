@@ -63,6 +63,13 @@ public:
    * @param z The measurement at k+1
    */
   void UpdateEKF(const Eigen::VectorXd &z);
+  
+  /**
+   * Normalizes the difference angles to stabilize RMSE
+   * @param phi The difference angles in the measurements
+   */
+  void KalmanFilter::NormalizeAngle(double& phi)
+
 
 };
 
