@@ -28,7 +28,7 @@ FusionEKF::FusionEKF() {
 
     //measurement covariance matrix - radar
     R_radar_ << 0.09, 0, 0,
-                0, 0.0009, 0,
+                0, 0.0006, 0,
                 0, 0, 0.09;
 
     H_laser_ << 1, 0, 0, 0,
@@ -57,17 +57,17 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     //state covariance matrix P
     ekf_.P_ = MatrixXd(4, 4);
     ekf_.P_ << 1, 0, 0, 0,
-              0, 1, 0, 0,
-              0, 0, 1000, 0,
-              0, 0, 0, 1000;
+               0, 1, 0, 0,
+               0, 0, 1000, 0,
+               0, 0, 0, 1000;
 
 
     //the initial transition matrix F_
     ekf_.F_ = MatrixXd(4, 4);
     ekf_.F_ << 1, 0, 1, 0,
-              0, 1, 0, 1,
-              0, 0, 1, 0,
-              0, 0, 0, 1;
+               0, 1, 0, 1,
+               0, 0, 1, 0,
+               0, 0, 0, 1;
     
     // first measurement
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
@@ -76,10 +76,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         double rhodot = measurement_pack.raw_measurements_(2);
         double px = rho * cos(phi);
         double py = rho * sin(phi);
-        //double vx = rhodot * cos(phi);
-        //double vy = rhodot * sin(phi);
-        double vx = 0;
-        double vy = 0;
+        double vx = rhodot * cos(phi);
+        double vy = rhodot * sin(phi);
         ekf_.x_ << px, py, vx, vy;
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
@@ -133,8 +131,4 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         ekf_.R_ = R_radar_;
         ekf_.UpdateEKF(measurement_pack.raw_measurements_);
     }
-
-    // print the output
-    //cout << "x_ = " << ekf_.x_ << endl;
-    //cout << "P_ = " << ekf_.P_ << endl;
 }

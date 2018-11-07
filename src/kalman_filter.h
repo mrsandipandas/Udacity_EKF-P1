@@ -65,12 +65,10 @@ public:
   void UpdateEKF(const Eigen::VectorXd &z);
   
   /**
-   * Normalizes the difference angles to stabilize RMSE
-   * @param phi The difference angles in the measurements
+   * Normalize the angle differences by limiting values to [-PI, PI]
+   * @param theta The measurement difference between the estimated state and actual state
    */
-  void KalmanFilter::NormalizeAngle(double& phi)
-
-
+  void NormalizeAngle(double &theta);
 };
 
 #endif /* KALMAN_FILTER_H_ */

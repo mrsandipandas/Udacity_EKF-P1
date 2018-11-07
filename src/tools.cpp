@@ -52,8 +52,8 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
     double vy = x_state(3);
 
     //pre-compute a set of terms to avoid repeated calculation
-    const double eps = 0.0001;
-    const double c1 = std::max(eps, px*px + py*py)
+    const double eps = 0.00001;
+    const double c1 = std::max(eps, px*px + py*py);
     const double c2 = sqrt(c1);
     const double c3 = (c1*c2);
     

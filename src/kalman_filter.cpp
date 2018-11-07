@@ -30,9 +30,10 @@ void KalmanFilter::Predict() {
 void KalmanFilter::Update(const VectorXd &z) {
     VectorXd y = z - H_ * x_;
     MatrixXd Ht = H_.transpose();
-    MatrixXd S = H_ * P_ * Ht + R_;
+    MatrixXd PHt = P_ * Ht;
+    MatrixXd S = H_ * PHt + R_;
     MatrixXd Si = S.inverse();
-    MatrixXd K =  P_ * Ht * Si;
+    MatrixXd K =  PHt * Si;
     
     //new state
     x_ = x_ + (K * y);
@@ -48,20 +49,21 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     double vy = x_(3);
     
     // Equations for Hj below
-    const double eps = .0001;
+    const double eps = .00001;
     double rho = sqrt(px*px + py*py);
-    double theta = atan2(py, std:max(eps, px));
-    double rho_dot = (px*vx + py*vy) / std:max(eps, rho);
+    rho = std::max(eps, rho);
+    double theta = atan2(py, px);
+    double rho_dot = (px*vx + py*vy) / rho;
     VectorXd Hj = VectorXd(3);
     Hj << rho, theta, rho_dot;
-                    
+    
     VectorXd y = z - Hj;
     NormalizeAngle(y(1));
-  
     MatrixXd Ht = H_.transpose();
-    MatrixXd S = H_ * P_ * Ht + R_;
+    MatrixXd PHt = P_ * Ht;
+    MatrixXd S = H_ * PHt + R_;
     MatrixXd Si = S.inverse();
-    MatrixXd K =  P_ * Ht * Si;
+    MatrixXd K =  PHt * Si;
     
     //new state
     x_ = x_ + (K * y);
@@ -70,7 +72,12 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     P_ = (I - K * H_) * P_;
 }
 
-void KalmanFilter::NormalizeAngle(double& phi)
-{
-  phi = atan2(sin(phi), cos(phi));
+void KalmanFilter::NormalizeAngle(double &theta) {
+    while(theta > M_PI){
+        theta -= 2 * M_PI;
+    }
+
+    while(theta < -M_PI){
+        theta += 2 * M_PI;
+    }
 }
